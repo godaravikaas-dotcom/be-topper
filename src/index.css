@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+/*
+ * Plain CSS variables (not @theme): they work both in the Vite build and in the builder's preview, where Tailwind
+ * runs in the browser. Use them from Tailwind as `bg-(--bg)`, `text-(--fg)` and so on.
+ */
+:root {
+  --bg: #ffffff;
+  --fg: #0a0a0a;
+  --muted: #6b7280;
+  --accent: #2563eb;
+  --font: ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+}
