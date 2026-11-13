@@ -1,5 +1,10 @@
 {
   "format": "makable-site",
   "version": 2,
-  "projectId": "ab454ea1-981b-4d23-82fd-d3f597e9ff01"
+  "projectId": "ab454ea1-981b-4d23-82fd-d3f597e9ff01",
+  "publish": {
+    "target": "github-pages",
+    "projectName": null,
+    "siteUrl": "https://godaravikaas-dotcom.github.io/be-topper/"
+  }
 }

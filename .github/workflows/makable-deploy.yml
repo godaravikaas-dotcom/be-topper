@@ -1,0 +1,45 @@
+# Deploys this site to GitHub Pages when makable publishes it (or when you run it from the Actions tab).
+# Pushing doesn't deploy: changes made on GitHub go live with the next publish. makable writes this file on every
+# publish, so changes made here are replaced by the next publish.
+name: Deploy to GitHub Pages
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: makable-deploy
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+env:
+  BRANCH: "main"
+  BASE_PATH: "/be-topper/"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install
+        run: npm install --no-audit --no-fund
+      # Built without type-checking, like the builder's preview runs it.
+      - name: Build
+        run: npx vite build --base "$BASE_PATH" --outDir dist
+      - name: Serve unknown paths with the app
+        run: cp dist/index.html dist/404.html
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - id: deployment
+        uses: actions/deploy-pages@v4
